@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model cards {
+  id             Int       @id @default(autoincrement())
+  registerId     Int
+  title          String    @unique
+  cardNumber     String    @unique
+  cardholderName String
+  securityCode   String
+  expirationDate String
+  password       String?
+  isVirtual      Boolean
+  type           cardType
+  timestamp      DateTime  @default(now()) @db.Timestamp(0)
+  registers      registers @relation(fields: [registerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model credentials {
+  id         Int       @id @default(autoincrement())
+  registerId Int
+  title      String    @unique
+  url        String
+  user       String
+  password   String
+  timestamp  DateTime  @default(now()) @db.Timestamp(0)
+  registers  registers @relation(fields: [registerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model registers {
+  id          Int           @id @default(autoincrement())
+  userId      Int
+  type        registerType
+  timestamp   DateTime      @default(now()) @db.Timestamp(0)
+  users       users         @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cards       cards[]
+  credentials credentials[]
+  safeNotes   safeNotes[]
+  wifi        wifi[]
+}
+
+model safeNotes {
+  id         Int       @id @default(autoincrement())
+  registerId Int
+  title      String    @unique
+  note       String
+  timestamp  DateTime  @default(now()) @db.Timestamp(0)
+  registers  registers @relation(fields: [registerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model users {
+  id        Int         @id @default(autoincrement())
+  email     String      @unique
+  password  String
+  timestamp DateTime    @default(now()) @db.Timestamp(0)
+  registers registers[]
+}
+
+model wifi {
+  id          Int       @id @default(autoincrement())
+  registerId  Int
+  title       String    @unique
+  networkName String
+  password    String?
+  timestamp   DateTime  @default(now()) @db.Timestamp(0)
+  registers   registers @relation(fields: [registerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+enum cardType {
+  credit
+  debit
+  credit_debit 
+}
+
+enum registerType {
+  credentials
+  safeNotes
+  cards
+  wifi
+}
