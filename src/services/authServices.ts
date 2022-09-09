@@ -1,5 +1,6 @@
 import * as authRepositories from '../repositories/authRepositories';
 import { hashSync, compareSync } from 'bcrypt';
+import bcrypt from 'bcrypt'; 
 import { IAuthData } from '../types/authTypes';
 import { users } from '@prisma/client';
 import { string } from 'joi';
@@ -37,7 +38,7 @@ export async function login(signInData: IAuthData) {
     const userSessionData = {
         userId: emailIsRegistered.id,
         name: emailIsRegistered.password,
-        expiresIn: dayjs().add(40, 'minutes')   
+        expiresIn: dayjs().add(40, 'minutes').format('LLLL')   
     }
 
     const token = JSON.stringify(jwt.sign(userSessionData, `${process.env.JWT_SECRET}`)); 
