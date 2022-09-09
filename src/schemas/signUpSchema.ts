@@ -1,6 +1,7 @@
 import joi from "joi";
+import { IAuthData } from '../types/authTypes';
 
-const signUpSchema = joi.object({
+const signUpSchema = joi.object<IAuthData>({
     email: joi.string().email().required().messages({
         "any.required": "Você deve informar um email!",
         "string.email": "Você deve informar um formato de email válido!"

@@ -15,7 +15,7 @@ model cards {
   cardholderName String
   securityCode   String
   expirationDate String
-  password       String?
+  password       String
   isVirtual      Boolean
   type           cardType
   timestamp      DateTime  @default(now()) @db.Timestamp(0)
@@ -67,7 +67,7 @@ model wifi {
   registerId  Int
   title       String    @unique
   networkName String
-  password    String?
+  password    String
   timestamp   DateTime  @default(now()) @db.Timestamp(0)
   registers   registers @relation(fields: [registerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
