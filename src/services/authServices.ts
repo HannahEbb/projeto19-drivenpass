@@ -6,6 +6,9 @@ import { users } from '@prisma/client';
 import { string } from 'joi';
 import dayjs from 'dayjs';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 
@@ -35,13 +38,12 @@ export async function login(signInData: IAuthData) {
         throw { type: 'unauthorized', message: 'Incorrect email or password!!' };
     }
 
-  
     const SECRET: string = process.env.JWT_KEY ?? '';
     const EXPIRES_IN = process.env.EXPIRES_IN;
 
     const payload = {
         userId: emailIsRegistered.id 
-    }
+    };
 
     const jwtConfig = {
         expiresIn: EXPIRES_IN

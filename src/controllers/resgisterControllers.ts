@@ -3,7 +3,7 @@ import * as registersServices from '../services/registerServices';
 
 
 export async function getAllRegisters(req: Request, res: Response) {
-    const userId : number = 1 // = res.locals
+    const userId = res.locals.userId;
 
     const registers = await registersServices.getAll(userId);
     
@@ -11,7 +11,7 @@ export async function getAllRegisters(req: Request, res: Response) {
 }
 
 export async function getCategoryRegisters(req: Request, res: Response) {
-    const userId : number = 2 // = res.locals
+    const userId = res.locals.userId;
     const { category } : any = req.params;
 
     const registers = await registersServices.getAllFromCategory(userId, category);
@@ -28,7 +28,7 @@ export async function getOneRegister(req: Request, res: Response) {
 }
 
 export async function postCategoryRegister(req: Request, res: Response) {
-    const userId : number = 2 //res.locals
+    const userId = res.locals.userId;
     const { category } : any = req.params;
     const data : any = req.body; 
 
