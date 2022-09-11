@@ -108,4 +108,24 @@ export async function createSafeNote(data: ISafeNotes) {
 export async function createWifi(data: IWifi) {
     await prisma.wifi.create({ data: data});
 }
+
+export async function deleteRegisterById(userId: number) {
+    await prisma.registers.delete({ where: {id: userId}});
+}
+
+export async function deleteCardById(id: number) {
+    await prisma.cards.delete({ where: {id}});
+}
+
+export async function deleteCredentialsById(id: number) {
+    await prisma.credentials.delete({ where: {id}});
+}
+
+export async function deleteSafeNotesById(id: number) {
+    await prisma.safeNotes.delete({ where: {id}});
+}
+
+export async function deleteWifiById(id: number) {
+    await prisma.wifi.delete({ where: {id}});
+}
  

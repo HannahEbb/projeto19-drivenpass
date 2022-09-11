@@ -80,7 +80,7 @@ enum cardType {
 
 enum registerType {
   credentials
-  safeNotes
+  safenotes
   cards
   wifi
 }
