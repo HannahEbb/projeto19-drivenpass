@@ -1,14 +1,15 @@
 import { Router } from 'express';
-//import { hasValidToken } from '../middlewares/validateApiKeyMiddleware';
-//import { validateSchemaMiddleware } from '../middlewares/validateSchemaMiddleware';
-
+import { tokenValidation } from '../middlewares/tokenValidator';
+import{ schemaValidator } from '../middlewares/schemaValidator';
+import { getAllRegisters, getCategoryRegisters, getOneRegister } from '../controllers/resgisterControllers';
+ 
 const registerRouter = Router();
 
-registerRouter.get('/registers');
-registerRouter.get('/registers/:category');
-registerRouter.get('/registers/:category/:id');
-registerRouter.post('/registers/:category');
-registerRouter.delete('/registers/:category/:id');
+registerRouter.get('/registers', tokenValidation, getAllRegisters);
+registerRouter.get('/registers/:category', tokenValidation, getCategoryRegisters);
+registerRouter.get('/registers/:category/:id', tokenValidation, getOneRegister);
+registerRouter.post('/registers/:category', tokenValidation);
+registerRouter.delete('/registers/:category/:id', tokenValidation);
 
 
 export default registerRouter;

@@ -35,13 +35,19 @@ export async function login(signInData: IAuthData) {
         throw { type: 'unauthorized', message: 'Incorrect email or password!!' };
     }
 
-    const userSessionData = {
-        userId: emailIsRegistered.id,
-        name: emailIsRegistered.password,
-        expiresIn: dayjs().add(40, 'minutes').format('LLLL')   
+  
+    const SECRET: string = process.env.JWT_KEY ?? '';
+    const EXPIRES_IN = process.env.EXPIRES_IN;
+
+    const payload = {
+        userId: emailIsRegistered.id 
     }
 
-    const token = JSON.stringify(jwt.sign(userSessionData, `${process.env.JWT_SECRET}`)); 
+    const jwtConfig = {
+        expiresIn: EXPIRES_IN
+      };
+
+    const token = jwt.sign(payload, SECRET, jwtConfig); 
     
     return token;
 }
